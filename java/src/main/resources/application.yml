@@ -15,7 +15,7 @@ spring:
       false
     hibernate:
       ddl-auto:
-        none
+        create-drop
       naming:
         physical-strategy:
           org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
@@ -23,6 +23,12 @@ spring:
           org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
       naming_strategy:
         org.hibernate.cfg.EJB3NamingStrategy
+    properties:
+      hibernate:
+        format_sql: true
+    database: postgresql
+    database-platform:
+      org.hibernate.dialect.PostgreSQLDialect
   liquibase:
     change-log:
       classpath:/db.changelog/changelog-master.xml
