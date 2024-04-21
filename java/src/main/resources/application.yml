@@ -1,0 +1,28 @@
+spring:
+  application:
+    name: explications
+  datasource:
+    driverClassName:
+      org.postgresql.Driver
+    url:
+      ${EXPLICATIONS_DB_URL:jdbc:postgresql://localhost:5432}/${EXPLICATIONS_DB_NAME:postgres}
+    username:
+      ${EXPLICATIONS_DB_USERNAME:postgres}
+    password:
+      ${EXPLICATIONS_DB_PASS:postgres}
+  jpa:
+    show-sql:
+      false
+    hibernate:
+      ddl-auto:
+        none
+      naming:
+        physical-strategy:
+          org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy:
+          org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+      naming_strategy:
+        org.hibernate.cfg.EJB3NamingStrategy
+  liquibase:
+    change-log:
+      classpath:/db.changelog/changelog-master.xml

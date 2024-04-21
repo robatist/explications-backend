@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="changelog-1.0" author="robatist">
+        <createTable tableName="Session">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="designation" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="sessionDate" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+            <column name="student_id" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="explication_id" type="INT">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="Session"
+                                 baseColumnNames="student_id"
+                                 constraintName="fk_session_person"
+                                 referencedTableName="Person"
+                                 referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="Session"
+                                 baseColumnNames="explication_id"
+                                 constraintName="fk_session_explication"
+                                 referencedTableName="Explication"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>

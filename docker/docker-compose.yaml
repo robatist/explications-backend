@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  # Backend - Java
+  back:
+    container_name: backend-server
+    build:
+      context: ../java
+      dockerfile: Dockerfile
+    image: backend-server:latest
+    ports:
+      - '8080:8080'
+    environment:
+      # TODO arranjar melhor solução para o IP
+      - EXPLICATIONS_DB_URL=jdbc:postgresql://172.19.0.1:5432
+      - EXPLICATIONS_DB_NAME=postgres
+    networks:
+      - spring-cloud-network
+
+  # PostgreSQL
+  postgres_db:
+    container_name: postgres-server
+    restart: always
+    image: postgres:alpine3.18
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - postgres_db:/var/lib/postgresql/data
+    networks:
+      - spring-cloud-network
+
+volumes:
+  postgres_db:
+    driver: local
+
+networks:
+  spring-cloud-network:
+    driver: bridge

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="changelog-1.0" author="robatist">
+        <createTable tableName="Person">
+            <column name="id" type="INT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true" unique="true"/>
+            </column>
+            <column name="firstName" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="lastName" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="age" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="nif" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="photo" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="active" type="BOOLEAN">
+                <constraints nullable="true"/>
+            </column>
+            <column name="userType" type="TEXT">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
