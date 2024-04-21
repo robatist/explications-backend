@@ -1,11 +1,11 @@
-package com.robatist.backend.backend.service;
+package com.robatist.backend.service;
 
-import com.robatist.backend.backend.domain.user.User;
-import com.robatist.backend.backend.exception.UserNotFoundException;
-import com.robatist.backend.backend.exception.UsersNotFoundException;
-import com.robatist.backend.backend.logging.Logger;
-import com.robatist.backend.backend.logging.enumeration.LogTag;
-import com.robatist.backend.backend.repository.UserRepository;
+import com.robatist.backend.domain.user.User;
+import com.robatist.backend.exception.UserNotFoundException;
+import com.robatist.backend.exception.UsersNotFoundException;
+import com.robatist.backend.logging.Logger;
+import com.robatist.backend.logging.enumeration.LogTag;
+import com.robatist.backend.repository.UserRepository;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -71,10 +71,13 @@ public class UserService {
         userUpdated = new User.UserBuilder(userUpdated) //
                 .firstName(user.getFirstName()) //
                 .lastName(user.getLastName()) //
+                .email(user.getEmail()) //
+                .password(user.getPassword()) //
                 .age(user.getAge()) //
                 .nif(user.getNif()) //
                 .photo(user.getPhoto()) //
                 .active(user.isActive()) //
+                .role(user.getRole()) //
                 .build();
 
         LOGGER.info(MDC.get("correlationId"), Arrays.asList(LogTag.USERS, LogTag.UPDATED), MessageFormat.format("User {0} Updated.", id));

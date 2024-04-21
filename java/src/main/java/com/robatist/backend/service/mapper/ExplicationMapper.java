@@ -1,11 +1,12 @@
-package com.robatist.backend.backend.service.mapper;
+package com.robatist.backend.service.mapper;
 
-import com.robatist.backend.backend.domain.Explication;
-import com.robatist.backend.backend.domain.StudyArea;
-import com.robatist.backend.backend.domain.user.User;
-import com.robatist.backend.backend.service.model.ExplicationDTO;
-import com.robatist.backend.backend.service.model.StudyAreaDTO;
-import com.robatist.backend.backend.service.model.user.UserDTO;
+import com.robatist.backend.domain.Explication;
+import com.robatist.backend.domain.StudyArea;
+import com.robatist.backend.domain.user.Role;
+import com.robatist.backend.domain.user.User;
+import com.robatist.backend.service.model.ExplicationDTO;
+import com.robatist.backend.service.model.StudyAreaDTO;
+import com.robatist.backend.service.model.user.UserDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -131,10 +132,13 @@ public class ExplicationMapper {
                         .id(userDTO.getId())
                         .firstName(userDTO.getFirstName())
                         .lastName(userDTO.getLastName())
+                        .email(userDTO.getEmail())
+                        .password(userDTO.getPassword())
                         .age(userDTO.getAge())
                         .nif(userDTO.getNif())
                         .photo(userDTO.getPhoto())
                         .active(userDTO.isActive())
+                        .role(Role.valueOf(userDTO.getRole()))
                         .build()
                 : null;
     }

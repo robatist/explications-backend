@@ -1,12 +1,13 @@
-package com.robatist.backend.backend;
+package com.robatist.backend;
 
-import com.robatist.backend.backend.domain.Explication;
-import com.robatist.backend.backend.domain.StudyArea;
-import com.robatist.backend.backend.domain.user.Teacher;
-import com.robatist.backend.backend.domain.user.User;
-import com.robatist.backend.backend.repository.ExplicationRepository;
-import com.robatist.backend.backend.repository.StudyAreaRepository;
-import com.robatist.backend.backend.repository.UserRepository;
+import com.robatist.backend.domain.Explication;
+import com.robatist.backend.domain.StudyArea;
+import com.robatist.backend.domain.user.Role;
+import com.robatist.backend.domain.user.Teacher;
+import com.robatist.backend.domain.user.User;
+import com.robatist.backend.repository.ExplicationRepository;
+import com.robatist.backend.repository.StudyAreaRepository;
+import com.robatist.backend.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -18,8 +19,8 @@ public class LoadDatabase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoadDatabase.class);
 
-    private final User user1 = new Teacher("Rodrigo", "Batista", 23, "111222333", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hZT8SakB-eGvBzrl-91ED8bthY-hnBL6cUVb7jmuMxO41Gej7xAQXHyNLZQ06ZcIPeM&usqp=CAU", true);
-    private final User user2 = new Teacher("Gonçalo", "Batista", 19, "333222111", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hZT8SakB-eGvBzrl-91ED8bthY-hnBL6cUVb7jmuMxO41Gej7xAQXHyNLZQ06ZcIPeM&usqp=CAU", true);
+    private final User user1 = new Teacher("Rodrigo", "Batista", "email@email.pt", "password", 23, "111222333", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hZT8SakB-eGvBzrl-91ED8bthY-hnBL6cUVb7jmuMxO41Gej7xAQXHyNLZQ06ZcIPeM&usqp=CAU", true, Role.USER);
+    private final User user2 = new Teacher("Gonçalo", "Batista", "email@email.pt", "password", 19, "333222111", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hZT8SakB-eGvBzrl-91ED8bthY-hnBL6cUVb7jmuMxO41Gej7xAQXHyNLZQ06ZcIPeM&usqp=CAU", true, Role.USER);
 
     private final StudyArea studyArea1 = new StudyArea("Informatique", "Informatique description");
     private final StudyArea studyArea2 = new StudyArea("Economy", "Economy description");
