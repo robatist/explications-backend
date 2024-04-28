@@ -112,10 +112,13 @@ public class ExplicationMapper {
                         .id(user.getId())
                         .firstName(user.getFirstName())
                         .lastName(user.getLastName())
+                        .email(user.getEmail())
+                        .password(user.getPassword())
                         .age(user.getAge())
                         .nif(user.getNif())
                         .photo(user.getPhoto())
                         .active(user.isActive())
+                        .role(user.getRole().name())
                         .build()
                 : null;
     }

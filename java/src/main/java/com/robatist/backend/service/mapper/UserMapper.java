@@ -1,5 +1,6 @@
 package com.robatist.backend.service.mapper;
 
+import com.robatist.backend.domain.user.Role;
 import com.robatist.backend.domain.user.User;
 import com.robatist.backend.service.model.user.UserDTO;
 import org.springframework.stereotype.Component;
@@ -55,10 +56,13 @@ public class UserMapper {
                         .id(userDTO.getId())
                         .firstName(userDTO.getFirstName())
                         .lastName(userDTO.getLastName())
+                        .email(userDTO.getEmail())
+                        .password(userDTO.getPassword())
                         .age(userDTO.getAge())
                         .nif(userDTO.getNif())
                         .photo(userDTO.getPhoto())
                         .active(userDTO.isActive())
+                        .role(Role.valueOf(userDTO.getRole()))
                         .build()
                 : null;
     }
