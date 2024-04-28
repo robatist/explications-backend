@@ -52,6 +52,19 @@ public class UserService {
         return userOptional.get();
     }
 
+    public User getUserByEmail(final String email) {
+        final Optional<User> userOptional = userRepository.findUserByEmail(email);
+
+        if (userOptional.isEmpty()) {
+            throw new UserNotFoundException(email);
+        }
+
+        LOGGER.info(MDC.get("correlationId"), Arrays.asList(LogTag.USERS, LogTag.RETRIEVED),
+                MessageFormat.format("User with ''{0}'' as email Retrieved.", email));
+
+        return userOptional.get();
+    }
+
     public User createUser(final User user) {
 
         LOGGER.info(MDC.get("correlationId"), Arrays.asList(LogTag.USERS, LogTag.CREATED), "User Created.");
