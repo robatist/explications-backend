@@ -1,9 +1,10 @@
 package com.robatist.backend.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.robatist.backend.token.Token;
 import jakarta.persistence.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -11,6 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "\"Person\"")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING, name = "\"userType\"")
@@ -49,6 +51,9 @@ public class User implements UserDetails {
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Token> tokens;
 
     public User() {
     }
@@ -181,7 +186,7 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return role.getAuthorities();
     }
 
     @Override

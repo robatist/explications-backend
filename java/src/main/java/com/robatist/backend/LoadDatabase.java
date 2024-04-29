@@ -1,35 +1,101 @@
 package com.robatist.backend;
 
+import com.robatist.backend.auth.AuthenticationResponse;
+import com.robatist.backend.auth.AuthenticationService;
+import com.robatist.backend.auth.RegisterRequest;
 import com.robatist.backend.domain.Explication;
 import com.robatist.backend.domain.StudyArea;
-import com.robatist.backend.domain.user.Role;
 import com.robatist.backend.domain.user.Teacher;
 import com.robatist.backend.domain.user.User;
 import com.robatist.backend.repository.ExplicationRepository;
 import com.robatist.backend.repository.StudyAreaRepository;
-import com.robatist.backend.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import static com.robatist.backend.domain.user.Role.*;
+
 @Configuration
 public class LoadDatabase {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LoadDatabase.class);
 
-    private final User user1 = new Teacher("Rodrigo", "Batista", "email@email.pt", "password", 23, "111222333", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hZT8SakB-eGvBzrl-91ED8bthY-hnBL6cUVb7jmuMxO41Gej7xAQXHyNLZQ06ZcIPeM&usqp=CAU", true, Role.USER);
-    private final User user2 = new Teacher("Gonçalo", "Batista", "email@email.pt", "password", 19, "333222111", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hZT8SakB-eGvBzrl-91ED8bthY-hnBL6cUVb7jmuMxO41Gej7xAQXHyNLZQ06ZcIPeM&usqp=CAU", true, Role.USER);
+    private final User user1 = new Teacher("André", "Mateus", "email@email.pt", "password", 23, "111222333", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hZT8SakB-eGvBzrl-91ED8bthY-hnBL6cUVb7jmuMxO41Gej7xAQXHyNLZQ06ZcIPeM&usqp=CAU", true, USER);
+    private final User user2 = new Teacher("Francisco", "Silva", "email@email.pt", "password", 19, "333222111", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hZT8SakB-eGvBzrl-91ED8bthY-hnBL6cUVb7jmuMxO41Gej7xAQXHyNLZQ06ZcIPeM&usqp=CAU", true, USER);
 
     private final StudyArea studyArea1 = new StudyArea("Informatique", "Informatique description");
     private final StudyArea studyArea2 = new StudyArea("Economy", "Economy description");
 
     @Bean
-    CommandLineRunner loadUsers(UserRepository userRepository) {
+    CommandLineRunner loadAdmin(AuthenticationService authenticationService) {
         return args -> {
-            LOGGER.info("Preloading " + userRepository.save(user1));
-            LOGGER.info("Preloading " + userRepository.save(user2));
+            var admin = RegisterRequest.builder()
+                    .firstName("Rodrigo")
+                    .lastName("Batista")
+                    .email("email@email.com")
+                    .password("password")
+                    .nif("123456789")
+                    .age(24)
+                    .photo("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hZT8SakB-eGvBzrl-91ED8bthY-hnBL6cUVb7jmuMxO41Gej7xAQXHyNLZQ06ZcIPeM&usqp=CAU")
+                    .isActive(true)
+                    .role(ADMIN)
+                    .build();
+
+            AuthenticationResponse authenticationResponse = authenticationService.register(admin);
+            LOGGER.info("Admin (Token) : " + authenticationResponse.getAccessToken());
+        };
+    }
+
+    // @Bean
+    CommandLineRunner loadManager(AuthenticationService authenticationService) {
+        return args -> {
+            var manager = RegisterRequest.builder()
+                    .firstName("Diogo")
+                    .lastName("Martins")
+                    .email("email@email.com")
+                    .password("password")
+                    .nif("123456789")
+                    .age(24)
+                    .photo("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hZT8SakB-eGvBzrl-91ED8bthY-hnBL6cUVb7jmuMxO41Gej7xAQXHyNLZQ06ZcIPeM&usqp=CAU")
+                    .isActive(true)
+                    .role(MANAGER)
+                    .build();
+
+            AuthenticationResponse authenticationResponse = authenticationService.register(manager);
+            LOGGER.info("Manager (Token) : " + authenticationResponse.getAccessToken());
+        };
+    }
+
+    // @Bean
+    CommandLineRunner loadUsers(AuthenticationService authenticationService) {
+        return args -> {
+            var user1 = RegisterRequest.builder()
+                    .firstName("André")
+                    .lastName("Mateus")
+                    .email("email@email.com")
+                    .password("password")
+                    .nif("123456789")
+                    .age(24)
+                    .photo("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hZT8SakB-eGvBzrl-91ED8bthY-hnBL6cUVb7jmuMxO41Gej7xAQXHyNLZQ06ZcIPeM&usqp=CAU")
+                    .isActive(true)
+                    .role(USER)
+                    .build();
+            LOGGER.info("User1 (Token) : " + authenticationService.register(user1).getAccessToken());
+
+            var user2 = RegisterRequest.builder()
+                    .firstName("Francisco")
+                    .lastName("Silva")
+                    .email("email@email.com")
+                    .password("password")
+                    .nif("123456789")
+                    .age(24)
+                    .photo("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hZT8SakB-eGvBzrl-91ED8bthY-hnBL6cUVb7jmuMxO41Gej7xAQXHyNLZQ06ZcIPeM&usqp=CAU")
+                    .isActive(true)
+                    .role(USER)
+                    .build();
+            LOGGER.info("User2 (Token) : " + authenticationService.register(user2).getAccessToken());
         };
     }
 
@@ -41,7 +107,7 @@ public class LoadDatabase {
         };
     }
 
-    @Bean
+    //@Bean
     CommandLineRunner loadExplications(ExplicationRepository explicationRepository) {
         return args -> {
             LOGGER.info("Preloading " + explicationRepository.save(new Explication("Explication 1", "Explication 1 description", studyArea1, true, user1, true)));

@@ -1,9 +1,11 @@
 package com.robatist.backend.config;
 
+import com.robatist.backend.auditing.ApplicationAuditAware;
 import com.robatist.backend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -32,6 +34,11 @@ public class ApplicationConfig {
         authenticationProvider.setPasswordEncoder(passwordEncoder());
 
         return authenticationProvider;
+    }
+
+    @Bean
+    public AuditorAware<Integer> auditorAware() {
+        return new ApplicationAuditAware();
     }
 
     @Bean

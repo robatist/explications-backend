@@ -3,10 +3,12 @@ package com.robatist.backend.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.robatist.backend.domain.user.User;
 import jakarta.persistence.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.util.Objects;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "\"Explication\"")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Explication {
