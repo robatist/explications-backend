@@ -32,3 +32,10 @@ spring:
   liquibase:
     change-log:
       classpath:/db.changelog/changelog-master.xml
+application:
+  security:
+    jwt:
+      secret-key: 3a4535734f346e4d3578523f65243c563f5a434e396c544e2050444c70
+      expiration: 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days
