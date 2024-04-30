@@ -28,23 +28,15 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public AuthenticationResponse register(RegisterRequest request) {
-        var user = new User.UserBuilder() //
-                .firstName(request.getFirstName()) //
-                .lastName(request.getLastName()) //
-                .email(request.getEmail()) //
-                .password(passwordEncoder.encode(request.getPassword())) //
-                .age(request.getAge()) //
-                .nif(request.getNif()) //
-                .photo(request.getPhoto()) //
-                .active(request.isActive()) //
-                .role(request.getRole()) //
-                .build();
+    public AuthenticationResponse register(RegisterRequest registerRequest) {
+        User userFromRequest = registerRequest.getUser();
+        String passwordEncoded = passwordEncoder.encode(userFromRequest.getPassword());
+        userFromRequest.setPassword(passwordEncoded);
 
-        var savedUser = userService.createUser(user);
+        var savedUser = userService.createUser(userFromRequest);
 
-        var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
+        var jwtToken = jwtService.generateToken(userFromRequest);
+        var refreshToken = jwtService.generateRefreshToken(userFromRequest);
 
         saveUserToken(savedUser, jwtToken);
 
