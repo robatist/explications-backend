@@ -1,6 +1,16 @@
 spring:
   application:
     name: explications
+  kafka:
+    bootstrap-servers:
+      ${KAFKA_BOOTSTRAP_SERVERS:localhost:29092}
+    key-serializer:
+      org.apache.kafka.common.serialization.StringSerializer
+    value-serializer:
+      org.apache.kafka.common.serialization.StringSerializer
+    explicationsTopic:
+      name:
+        ${KAFKA_TOPIC_NAME:explications}
   datasource:
     driverClassName:
       org.postgresql.Driver
