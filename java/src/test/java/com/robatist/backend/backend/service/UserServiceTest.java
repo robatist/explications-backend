@@ -1,6 +1,8 @@
 package com.robatist.backend.backend.service;
 
-import com.robatist.backend.backend.domain.user.User;
+import com.robatist.backend.domain.user.Role;
+import com.robatist.backend.domain.user.User;
+import com.robatist.backend.service.UserService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +23,7 @@ public class UserServiceTest {
     public void createUser() {
         List<User> userList = userService.getAllUsers();
 
-        User userCreated = new User("firstNameTest", "lastNameTest", 23, "111222333", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hZT8SakB-eGvBzrl-91ED8bthY-hnBL6cUVb7jmuMxO41Gej7xAQXHyNLZQ06ZcIPeM&usqp=CAU", true);
+        User userCreated = new User("firstNameTest", "lastNameTest", "email@email.pt", "password", 23, "111222333", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hZT8SakB-eGvBzrl-91ED8bthY-hnBL6cUVb7jmuMxO41Gej7xAQXHyNLZQ06ZcIPeM&usqp=CAU", true, Role.USER);
 
         User result = userService.createUser(userCreated);
 
@@ -33,7 +35,7 @@ public class UserServiceTest {
         User result = userService.getUserById(7);
 
         // EXPECTS
-        User expectedUser = new User(7, "firstNameTest", "lastNameTest", 23, "111222333", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hZT8SakB-eGvBzrl-91ED8bthY-hnBL6cUVb7jmuMxO41Gej7xAQXHyNLZQ06ZcIPeM&usqp=CAU", true);
+        User expectedUser = new User(7, "firstNameTest", "lastNameTest", "email@email.pt", "password", 23, "111222333", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hZT8SakB-eGvBzrl-91ED8bthY-hnBL6cUVb7jmuMxO41Gej7xAQXHyNLZQ06ZcIPeM&usqp=CAU", true, Role.USER);
 
         // ASSERTS
         Assert.assertEquals(expectedUser, result);
@@ -41,12 +43,12 @@ public class UserServiceTest {
 
     @Test
     public void updateUser() {
-        User userToUpdate = new User("firstNameTest", "lastNameTest", 23, "nif updated", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hZT8SakB-eGvBzrl-91ED8bthY-hnBL6cUVb7jmuMxO41Gej7xAQXHyNLZQ06ZcIPeM&usqp=CAU", true);
+        User userToUpdate = new User("firstNameTest", "lastNameTest", "email@email.pt", "password", 23, "nif updated", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hZT8SakB-eGvBzrl-91ED8bthY-hnBL6cUVb7jmuMxO41Gej7xAQXHyNLZQ06ZcIPeM&usqp=CAU", true, Role.USER);
 
         User userUpdated = userService.updateUser(7, userToUpdate);
 
         // EXPECTS
-        User expectedUser = new User(7, "firstNameTest", "lastNameTest", 23, "nif updated", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hZT8SakB-eGvBzrl-91ED8bthY-hnBL6cUVb7jmuMxO41Gej7xAQXHyNLZQ06ZcIPeM&usqp=CAU", true);
+        User expectedUser = new User(7, "firstNameTest", "lastNameTest", "email@email.pt", "password", 23, "nif updated", "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5hZT8SakB-eGvBzrl-91ED8bthY-hnBL6cUVb7jmuMxO41Gej7xAQXHyNLZQ06ZcIPeM&usqp=CAU", true, Role.USER);
 
         // ASSERTS
         Assert.assertEquals(expectedUser, userUpdated);
