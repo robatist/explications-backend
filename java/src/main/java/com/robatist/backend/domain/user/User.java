@@ -95,6 +95,10 @@ public class User implements UserDetails {
         return firstName;
     }
 
+    public String getFullname() {
+        return firstName + " " + lastName;
+    }
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
