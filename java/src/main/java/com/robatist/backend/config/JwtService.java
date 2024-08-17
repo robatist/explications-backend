@@ -1,5 +1,6 @@
 package com.robatist.backend.config;
 
+import com.robatist.backend.domain.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -36,27 +37,35 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(User userDetails) {
         return generateToken(new HashMap<>(), userDetails);
     }
 
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+    public String generateToken(Map<String, Object> extraClaims, User userDetails) {
         return buildToken(extraClaims, userDetails, jwtExpiration);
     }
 
-    public String generateRefreshToken(UserDetails userDetails) {
+    public String generateRefreshToken(User userDetails) {
         return buildToken(new HashMap<>(), userDetails, refreshExpiration);
     }
 
-    private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
+    private String buildToken(Map<String, Object> extraClaims, User userDetails, long expiration) {
         return Jwts
                 .builder()
-                .setClaims(extraClaims)
+                .setClaims(addCustomClaims(extraClaims, userDetails))
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
+    }
+
+    private Map<String, Object> addCustomClaims(Map<String, Object> extraClaims, User userDetails)
+    {
+        extraClaims.put("name", userDetails.getFullname());
+        extraClaims.put("role", userDetails.getRole().name());
+
+        return extraClaims;
     }
 
     public boolean isTokenValid(String token, UserDetails userDetails) {
